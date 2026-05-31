@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Style Transfer</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #333; }
+        input[type="file"] { margin: 8px 0; display: block; }
+        button { margin-top: 16px; padding: 10px 24px; background: #4a90e2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #357abd; }
+        .error { color: red; margin-top: 12px; }
+        .result { margin-top: 24px; }
+        .result img { max-width: 100%; border-radius: 8px; }
+        label { font-weight: bold; margin-top: 12px; display: block; }
+        .loading { display: none; margin-top: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>Neural Style Transfer</h1>
+    <form method="POST" action="/transfer" enctype="multipart/form-data" onsubmit="document.getElementById('loading').style.display='block'">
+        <label>Content Image (your photo):</label>
+        <input type="file" name="content" accept="image/*" required>
+        <label>Style Image (artwork):</label>
+        <input type="file" name="style" accept="image/*" required>
+        <button type="submit">Transfer Style</button>
+        <p id="loading" class="loading">Processing... this may take a few minutes.</p>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if output %}
+        <div class="result">
+            <h2>Output</h2>
+            <img src="/static/outputs/{{ output }}" alt="Style Transfer Output">
+        </div>
+    {% endif %}
+</body>
+</html>
